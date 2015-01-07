@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" id="AnchorPane" prefHeight="480" prefWidth="640" fx:controller="com.mycompany.ardutest.FXMLController">
+	<VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+		<TitledPane animated="false" text="Ardu Connection">
+			<content>
+				<AnchorPane>
+					<VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+						<HBox alignment="TOP_RIGHT">
+							<Button mnemonicParsing="false" text="Setting..." onAction="#OnActionSetting" />
+							<Separator prefWidth="10.0" />
+							<Button mnemonicParsing="false" text="Connect" onAction="#OnActionConnect" />
+							<Separator prefWidth="10.0" />
+							<Button mnemonicParsing="false" text="Disconnect" onAction="#OnActionDisConn" />
+						</HBox>
+						<Separator prefHeight="10.0" /> 
+						<HBox>
+							<TextField HBox.hgrow="ALWAYS" fx:id="SockSendTxt" />
+							<Separator prefWidth="10.0" />
+							<Button mnemonicParsing="false" text="Send" onAction="#OnActionSend" />
+						</HBox>
+					</VBox>
+				</AnchorPane>
+			</content>
+		</TitledPane>
+	</VBox>
+</AnchorPane>
