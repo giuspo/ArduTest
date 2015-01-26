@@ -11,12 +11,11 @@ import akka.actor.UntypedActor;
  *
  * @author giulio
  */
-public class RecvAct extends UntypedActor
+public class LogAct extends UntypedActor
 {
 	@Override
 	public void onReceive(Object objMsg) throws Exception
 	{
 		
 	}
-	
 }

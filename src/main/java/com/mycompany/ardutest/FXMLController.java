@@ -2,16 +2,38 @@ package com.mycompany.ardutest;
 
 import com.typesafe.config.Config;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
 public class FXMLController implements Initializable
 {
+	// private final ObservableList<LogDataModel> _rgtLogData = FXCollections.observableArrayList();
+	private ObservableList<LogDataModel> _rgtLogData;
+	
 	@FXML
     private TextField SockSendTxt;
+	
+	@FXML
+	private TableView<LogDataModel> LogDataTbl;
+	
+	@FXML
+	private TableColumn<LogDataModel, LocalDateTime> DateCol;
+	
+	@FXML
+	private TableColumn<LogDataModel, Integer> LevelCol;
+	
+	@FXML
+	private TableColumn<LogDataModel, String> Msg1Col;
+	
+	@FXML
+	private TableColumn<LogDataModel, String> Msg2Col;
 	
 	@FXML
     private void OnActionSetting(ActionEvent event)
@@ -58,10 +80,39 @@ public class FXMLController implements Initializable
 		
 		MainApp.getSockAct().tell(tSockSendMsg, null);
 	}
+	
+	@FXML
+    private void OnActionTest(ActionEvent event)
+	{
+		LogDataModel tLog = new LogDataModel();
+		
+		tLog.setDateTime(LocalDateTime.now());
+		tLog.setLevel(5);
+		tLog.setMsg1("Hello World!!!");
+		_rgtLogData.add(tLog);
+		
+		MainApp.getLogger().info("Add a Log Value");
+    }
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb)
 	{
 		// TODO
+		DateCol.setCellValueFactory(tData -> tData.getValue().getDateTimeProp());
+		LevelCol.setCellValueFactory(tData -> tData.getValue().getLevelProp().asObject());
+		Msg1Col.setCellValueFactory(tData -> tData.getValue().getMsg1Prop());
 	}
+	
+//	public FXMLController(ObservableList<LogDataModel> rgtObsLogData)
+//	{
+//		this._rgtLogData = rgtObsLogData;
+//	}
+	
+	public void InitData(ObservableList<LogDataModel> rgtObsLogData)
+	{
+		this._rgtLogData = rgtObsLogData;
+		LogDataTbl.setItems(_rgtLogData);
+	}
+	
+	
 }

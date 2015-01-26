@@ -5,11 +5,9 @@
 	</Properties>
 
 	<Appenders>
-		<RollingFile name="file-log" fileName="${log-path}/ArduTest.log"
+		<RollingFile name="file" fileName="${log-path}/ArduTest.log"
 			 filePattern="${log-path}/ArduTest-%d{yyyy-MM-dd}.log">
-			<PatternLayout>
-				<pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
-			</PatternLayout>
+			<PatternLayout pattern="[%d];[%level];[%logger];[%msg];%n"/>
 			<Policies>
 				<TimeBasedTriggeringPolicy interval="1" modulate="true"/>
 			</Policies>

@@ -8,6 +8,9 @@ package com.mycompany.ardutest;
 import java.time.LocalDateTime;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
@@ -16,37 +19,68 @@ import javafx.beans.property.StringProperty;
  */
 public class LogDataModel
 {
-	private ObjectProperty<LocalDateTime> _tDateTime;
-	private IntegerProperty _iLevel;
-	private StringProperty _strMsg;
+	private final ObjectProperty<LocalDateTime> _tDateTimeProp = new SimpleObjectProperty<>();
+	private final IntegerProperty _iLevelProp = new SimpleIntegerProperty();
+	private final StringProperty _strMsg1Prop = new SimpleStringProperty();
+	private final StringProperty _strMsg2Prop = new SimpleStringProperty();
 
-	public ObjectProperty<LocalDateTime> getDateTime()
+	public ObjectProperty<LocalDateTime> getDateTimeProp()
 	{
-		return _tDateTime;
+		return _tDateTimeProp;
 	}
 
-	public void setDateTime(ObjectProperty<LocalDateTime> _tDateTime)
+	public IntegerProperty getLevelProp()
 	{
-		this._tDateTime = _tDateTime;
+		return _iLevelProp;
 	}
 
-	public IntegerProperty getLevel()
+	public StringProperty getMsg1Prop()
 	{
-		return _iLevel;
+		return _strMsg1Prop;
+	}
+	
+	public StringProperty getMsg2Prop()
+	{
+		return _strMsg2Prop;
+	}
+	
+	public LocalDateTime getDateTime()
+	{
+		return _tDateTimeProp.get();
 	}
 
-	public void setLevel(IntegerProperty _iLevel)
+	public void setDateTime(LocalDateTime tDateTime)
 	{
-		this._iLevel = _iLevel;
+		this._tDateTimeProp.set(tDateTime);
 	}
 
-	public StringProperty getMsg()
+	public Integer getLevel()
 	{
-		return _strMsg;
+		return _iLevelProp.get();
 	}
 
-	public void setMsg(StringProperty _strMsg)
+	public void setLevel(int iLevel)
 	{
-		this._strMsg = _strMsg;
+		this._iLevelProp.set(iLevel);
+	}
+
+	public String getMsg1()
+	{
+		return _strMsg1Prop.get();
+	}
+
+	public void setMsg1(String strMsg)
+	{
+		this._strMsg1Prop.set(strMsg);
+	}
+	
+	public String getMsg2()
+	{
+		return _strMsg2Prop.get();
+	}
+
+	public void setMsg2(String strMsg)
+	{
+		this._strMsg2Prop.set(strMsg);
 	}
 }

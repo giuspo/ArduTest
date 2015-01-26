@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" id="AnchorPane" prefHeight="480" prefWidth="640" fx:controller="com.mycompany.ardutest.FXMLController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" id="AnchorPane" prefHeight="480" prefWidth="640" fx:controller="com.mycompany.ardutest.FXMLController">
 	<BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 		<top>
 			<TitledPane animated="false" text="Ardu Connection">
@@ -37,11 +37,15 @@
 					<AnchorPane>
 						<VBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
 							<HBox>
-								<TableView AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" >
+								<TableView HBox.hgrow="ALWAYS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" fx:id="LogDataTbl" >
 									<columns>
-										<TableColumn text="Example" /> 
+										<TableColumn text="Date" fx:id="DateCol" />
+										<TableColumn text="Level" fx:id="LevelCol" />
+										<TableColumn text="Mesg1" fx:id="Msg1Col" />
+										<TableColumn text="Mesg2" fx:id="Msg2Col" />
 									</columns>
 								</TableView>
+								<Button mnemonicParsing="false" text="Test" onAction="#OnActionTest" />
 							</HBox>
 						</VBox>
 					</AnchorPane>
