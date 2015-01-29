@@ -14,7 +14,6 @@ import javafx.scene.control.TextField;
 
 public class FXMLController implements Initializable
 {
-	// private final ObservableList<LogDataModel> _rgtLogData = FXCollections.observableArrayList();
 	private ObservableList<LogDataModel> _rgtLogData;
 	
 	@FXML
@@ -27,7 +26,7 @@ public class FXMLController implements Initializable
 	private TableColumn<LogDataModel, LocalDateTime> DateCol;
 	
 	@FXML
-	private TableColumn<LogDataModel, Integer> LevelCol;
+	private TableColumn<LogDataModel, String> LevelCol;
 	
 	@FXML
 	private TableColumn<LogDataModel, String> Msg1Col;
@@ -84,14 +83,13 @@ public class FXMLController implements Initializable
 	@FXML
     private void OnActionTest(ActionEvent event)
 	{
-		LogDataModel tLog = new LogDataModel();
-		
-		tLog.setDateTime(LocalDateTime.now());
-		tLog.setLevel(5);
-		tLog.setMsg1("Hello World!!!");
+		LogDataModel tLog = new LogDataModel(LocalDateTime.now(),
+			"INFO",
+			"",
+			"Hello World!!!");
 		_rgtLogData.add(tLog);
 		
-		MainApp.getLogger().info("Add a Log Value");
+		MainApp.getLogger().info("Add a Test Log Value");
     }
 
 	@Override
@@ -99,20 +97,13 @@ public class FXMLController implements Initializable
 	{
 		// TODO
 		DateCol.setCellValueFactory(tData -> tData.getValue().getDateTimeProp());
-		LevelCol.setCellValueFactory(tData -> tData.getValue().getLevelProp().asObject());
+		LevelCol.setCellValueFactory(tData -> tData.getValue().getLevelProp());
 		Msg1Col.setCellValueFactory(tData -> tData.getValue().getMsg1Prop());
 	}
 	
-//	public FXMLController(ObservableList<LogDataModel> rgtObsLogData)
-//	{
-//		this._rgtLogData = rgtObsLogData;
-//	}
-	
 	public void InitData(ObservableList<LogDataModel> rgtObsLogData)
 	{
-		this._rgtLogData = rgtObsLogData;
+		_rgtLogData = rgtObsLogData;
 		LogDataTbl.setItems(_rgtLogData);
 	}
-	
-	
 }

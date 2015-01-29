@@ -3,6 +3,7 @@ package com.mycompany.ardutest;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
+import akka.actor.dsl.Inbox;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import java.io.File;
@@ -20,7 +21,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class MainApp extends Application
-{	
+{
 	private static final Logger _tLogger = LogManager.getLogger(MainApp.class);
 	private static ActorSystem _tActSys;
 	private static Config _tAppConf;
@@ -108,6 +109,7 @@ public class MainApp extends Application
 		{
 			return new SockAct(tRecvAct);
 		}), "SockAct");
+		
 		
 		getLogger().info("Application Start");
 		

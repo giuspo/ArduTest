@@ -36,7 +36,6 @@ public class TailerAct extends UntypedActor
 			100,
 			false,
 			true);
-		// _tTailer.run();
 		
 		super.preStart();
 	}
@@ -52,6 +51,11 @@ public class TailerAct extends UntypedActor
 	@Override
 	public void onReceive(Object objMsg) throws Exception
 	{
+		if(objMsg instanceof LogDataMsg)
+		{
+			LogDataMsg tLogData = (LogDataMsg)objMsg;
+			
+			getContext().system().eventStream().publish(objMsg);
+		}
 	}
-	
 }

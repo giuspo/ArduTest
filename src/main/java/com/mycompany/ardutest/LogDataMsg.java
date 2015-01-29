@@ -14,19 +14,19 @@ import java.time.LocalDateTime;
 public class LogDataMsg
 {
 	private final LocalDateTime _tDateTime;
-	private final int _iLevel;
+	private final String _strLevel;
 	private final String _strMsg1;
 	private final String _strMsg2;
 	
 	public LogDataMsg(LocalDateTime tDateTime,
-		int iLevel,
+		String strLevel,
 		String strMsg1,
 		String strMsg2)
 	{
-		this._tDateTime = tDateTime;
-		this._iLevel = iLevel;
-		this._strMsg1 = strMsg1;
-		this._strMsg2 = strMsg2;
+		_tDateTime = tDateTime;
+		_strLevel = strLevel;
+		_strMsg1 = strMsg1;
+		_strMsg2 = strMsg2;
 	}
 
 	public LocalDateTime gettDateTime()
@@ -34,17 +34,17 @@ public class LogDataMsg
 		return _tDateTime;
 	}
 
-	public int getiLevel()
+	public String getLevel()
 	{
-		return _iLevel;
+		return _strLevel;
 	}
 
-	public String getStrMsg1()
+	public String getMsg1()
 	{
 		return _strMsg1;
 	}
 
-	public String getStrMsg2()
+	public String getMsg2()
 	{
 		return _strMsg2;
 	}

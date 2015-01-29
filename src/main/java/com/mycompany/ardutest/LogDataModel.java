@@ -20,18 +20,29 @@ import javafx.beans.property.StringProperty;
 public class LogDataModel
 {
 	private final ObjectProperty<LocalDateTime> _tDateTimeProp = new SimpleObjectProperty<>();
-	private final IntegerProperty _iLevelProp = new SimpleIntegerProperty();
+	private final StringProperty _strLevelProp = new SimpleStringProperty();
 	private final StringProperty _strMsg1Prop = new SimpleStringProperty();
 	private final StringProperty _strMsg2Prop = new SimpleStringProperty();
+
+	public LogDataModel(LocalDateTime tLocalTime,
+		String strLevel,
+		String strMsg1,
+		String strMsg2)
+	{
+		_tDateTimeProp.setValue(tLocalTime);
+		_strLevelProp.setValue(strLevel);
+		_strMsg1Prop.setValue(strMsg1);
+		_strMsg2Prop.setValue(strMsg2);
+	}
 
 	public ObjectProperty<LocalDateTime> getDateTimeProp()
 	{
 		return _tDateTimeProp;
 	}
 
-	public IntegerProperty getLevelProp()
+	public StringProperty getLevelProp()
 	{
-		return _iLevelProp;
+		return _strLevelProp;
 	}
 
 	public StringProperty getMsg1Prop()
@@ -54,14 +65,14 @@ public class LogDataModel
 		this._tDateTimeProp.set(tDateTime);
 	}
 
-	public Integer getLevel()
+	public String getLevel()
 	{
-		return _iLevelProp.get();
+		return _strLevelProp.get();
 	}
 
-	public void setLevel(int iLevel)
+	public void setLevel(String strLevel)
 	{
-		this._iLevelProp.set(iLevel);
+		_strLevelProp.set(strLevel);
 	}
 
 	public String getMsg1()
@@ -71,7 +82,7 @@ public class LogDataModel
 
 	public void setMsg1(String strMsg)
 	{
-		this._strMsg1Prop.set(strMsg);
+		_strMsg1Prop.set(strMsg);
 	}
 	
 	public String getMsg2()
@@ -81,6 +92,6 @@ public class LogDataModel
 
 	public void setMsg2(String strMsg)
 	{
-		this._strMsg2Prop.set(strMsg);
+		_strMsg2Prop.set(strMsg);
 	}
 }

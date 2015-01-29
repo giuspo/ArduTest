@@ -6,12 +6,13 @@
 package com.mycompany.ardutest;
 
 import akka.actor.ActorRef;
-import java.io.File;
+import akka.actor.dsl.Inbox;
+import static akka.actor.dsl.Inbox;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.apache.commons.io.input.Tailer;
 import org.apache.commons.io.input.TailerListenerAdapter;
 
 /**
@@ -64,15 +65,28 @@ public class MyTailer extends TailerListenerAdapter
 
 			if("" != strDate)
 			{
+				LocalDateTime tLocalTime = null;
+				
 				try
 				{
-					LocalDateTime tLodDate = LocalDateTime.parse(strDate,
-						DateTimeFormatter.ofPattern("u-M-d H:m:s.S"));
+					tLocalTime = LocalDateTime.parse(strDate,
+						DateTimeFormatter.ofPattern("u-M-d H:m:s,SSS"));
 				}
-				catch(Exception tExc)
+				catch(DateTimeParseException tExc)
 				{
-					String strExc = tExc.getMessage();
+					tLocalTime = LocalDateTime.now();
+					strMsg1 += " (DateTime Parse Exception!)";
 				}
+				
+//				_tTailerAct.tell(new LogDataModel(tLocalTime,
+//					strLevel,
+//					strMsg1,
+//					strMsg2),
+//					null);
+				
+				Inbox tInbox = new Inbox.Inbox(MainApp.getActSys());
+				
+				tInbox.inbox(null)
 			}
 		}
 		
