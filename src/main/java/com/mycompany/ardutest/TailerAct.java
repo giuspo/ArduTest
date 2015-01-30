@@ -21,7 +21,7 @@ public class TailerAct extends UntypedActor
 	private Tailer _tTailer;
 	
 	@Override
-	public void preStart()
+	public void preStart() throws Exception
 	{
 		
 		LoggerContext tLogCtx = (LoggerContext)LogManager.getContext(true);
@@ -41,7 +41,7 @@ public class TailerAct extends UntypedActor
 	}
 
 	@Override
-	public void postStop()
+	public void postStop() throws Exception
 	{
 		_tTailer.stop();
 		
@@ -53,8 +53,6 @@ public class TailerAct extends UntypedActor
 	{
 		if(objMsg instanceof LogDataMsg)
 		{
-			LogDataMsg tLogData = (LogDataMsg)objMsg;
-			
 			getContext().system().eventStream().publish(objMsg);
 		}
 	}

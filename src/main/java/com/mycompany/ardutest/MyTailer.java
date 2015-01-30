@@ -6,8 +6,7 @@
 package com.mycompany.ardutest;
 
 import akka.actor.ActorRef;
-import akka.actor.dsl.Inbox;
-import static akka.actor.dsl.Inbox;
+import akka.actor.Inbox;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -84,9 +83,12 @@ public class MyTailer extends TailerListenerAdapter
 //					strMsg2),
 //					null);
 				
-				Inbox tInbox = new Inbox.Inbox(MainApp.getActSys());
+				Inbox tInbox = Inbox.create(MainApp.getActSys());
 				
-				tInbox.inbox(null)
+				tInbox.send(_tTailerAct, new LogDataMsg(tLocalTime,
+					strLevel,
+					strMsg1,
+					strMsg2));
 			}
 		}
 		

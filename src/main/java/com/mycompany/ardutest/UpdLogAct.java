@@ -23,7 +23,7 @@ public class UpdLogAct extends UntypedActor
 	}
 	
 	@Override
-	public void preStart()
+	public void preStart() throws Exception
 	{
 		getContext().system().eventStream().subscribe(getSelf(),
 			LogDataMsg.class);

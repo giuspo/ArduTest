@@ -99,6 +99,7 @@ public class FXMLController implements Initializable
 		DateCol.setCellValueFactory(tData -> tData.getValue().getDateTimeProp());
 		LevelCol.setCellValueFactory(tData -> tData.getValue().getLevelProp());
 		Msg1Col.setCellValueFactory(tData -> tData.getValue().getMsg1Prop());
+		Msg2Col.setCellValueFactory(tData -> tData.getValue().getMsg2Prop());
 	}
 	
 	public void InitData(ObservableList<LogDataModel> rgtObsLogData)

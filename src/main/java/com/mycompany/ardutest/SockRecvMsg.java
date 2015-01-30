@@ -20,6 +20,6 @@ public class SockRecvMsg
 
 	public SockRecvMsg(String strMsg)
 	{
-		this._strMsg = strMsg;
+		_strMsg = strMsg;
 	}
 }

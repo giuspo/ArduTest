@@ -46,7 +46,6 @@ public class SockAct extends UntypedActor
 	private Future<Void> _tFutSockConn;
 	private Future<Integer> _tFutSockRead;
 	private Future<Integer> _tFutSockWrite;
-	private final ActorRef _tRcvAct;
 	private FSMStateType _tFSMState;
 	private ConnectMsg _tConnMsg;
 	private SockSendMsg _tSockSendMsg;
@@ -55,13 +54,8 @@ public class SockAct extends UntypedActor
 	private final ByteBuffer _tWriteBuff = ByteBuffer.allocate(1024);
 	private Integer _iNRecvData = 0;
 
-	public SockAct(ActorRef tRcvAct)
-	{
-		this._tRcvAct = tRcvAct;
-	}
-
 	@Override
-	public void preStart()
+	public void preStart() throws Exception
 	{
 		_tFSMState = FSMStateType.INIT_STS;
 		
@@ -276,10 +270,8 @@ public class SockAct extends UntypedActor
 							_iNRecvData = 0;
 							_tReadBuff.clear();
 							
-							String strTemp = _tSockRecvMsg.getMsg();
-							
-							_tSockRecvMsg = null;			
-							_tRcvAct.tell(strTemp, getSelf());
+							getContext().system().eventStream().publish(
+								new SockRecvMsg(_tSockRecvMsg.getMsg()));
 						}
 						
 						_tFSMState = FSMStateType.SEND_STS;

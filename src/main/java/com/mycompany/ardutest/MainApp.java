@@ -3,7 +3,6 @@ package com.mycompany.ardutest;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
-import akka.actor.dsl.Inbox;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import java.io.File;
@@ -16,7 +15,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import org.apache.commons.io.input.Tailer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -27,7 +25,9 @@ public class MainApp extends Application
 	private static Config _tAppConf;
 	private static ActorRef _tSockAct;
 	private static ActorRef _tTailerAct;
-	private final ObservableList<LogDataModel> _rgtLogData = FXCollections.observableArrayList();
+	private static ActorRef _tUpdLogAct;
+	private static ActorRef _tSockRecvAct;
+	private static final ObservableList<LogDataModel> _rgtLogData = FXCollections.observableArrayList();
 
 	public static ActorRef getSockAct()
 	{
@@ -101,15 +101,16 @@ public class MainApp extends Application
 		_tAppConf = ConfigFactory.parseFile(tAppFile);
 		_tActSys = ActorSystem.create();
 		
-		_tTailerAct = _tActSys.actorOf(Props.apply(TailerAct.class));
+		_tUpdLogAct = _tActSys.actorOf(Props.create(UpdLogAct.class, _rgtLogData),
+			"UpdLogAct");
+		_tTailerAct = _tActSys.actorOf(Props.create(TailerAct.class),
+			"TailerAct");
 		
-		ActorRef tRecvAct = _tActSys.actorOf(Props.apply(LogAct.class));
+		_tSockRecvAct = _tActSys.actorOf(Props.create(SockRecvAct.class),
+			"SockRecvAct");
 		
-		_tSockAct = _tActSys.actorOf(new Props(() ->
-		{
-			return new SockAct(tRecvAct);
-		}), "SockAct");
-		
+		_tSockAct = _tActSys.actorOf(Props.create(SockAct.class),
+			"SockAct");
 		
 		getLogger().info("Application Start");
 		
