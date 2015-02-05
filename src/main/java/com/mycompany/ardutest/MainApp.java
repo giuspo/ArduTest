@@ -28,6 +28,7 @@ public class MainApp extends Application
 	private static ActorRef _tUpdLogAct;
 	private static ActorRef _tSockRecvAct;
 	private static final ObservableList<LogDataModel> _rgtLogData = FXCollections.observableArrayList();
+	private static Stage _tStage;
 
 	public static ActorRef getSockAct()
 	{
@@ -49,9 +50,16 @@ public class MainApp extends Application
 		return _tLogger;
 	}
 	
+	public static Stage getStage()
+	{
+		return _tStage;
+	}
+	
 	@Override
 	public void start(Stage stage) throws Exception
 	{
+		_tStage = stage;
+		
 		// SG: 1
 		// Parent root = FXMLLoader.load(getClass().getResource("/fxml/Scene.fxml"));
 		// Scene scene = new Scene(root);
@@ -103,6 +111,7 @@ public class MainApp extends Application
 		
 		_tUpdLogAct = _tActSys.actorOf(Props.create(UpdLogAct.class, _rgtLogData),
 			"UpdLogAct");
+		
 		_tTailerAct = _tActSys.actorOf(Props.create(TailerAct.class),
 			"TailerAct");
 		

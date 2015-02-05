@@ -1,5 +1,4 @@
-[2015-01-26 17:58:39,729];[INFO];[com.mycompany.ardutest.MainApp];[Application Start];
-[2015-01-26 17:58:43,531];[INFO];[com.mycompany.ardutest.MainApp];[GUI Start];
-[2015-01-26 18:00:11,355];[INFO];[com.mycompany.ardutest.MainApp];[Add a Log Value];
-[2015-01-26 18:12:14,855];[INFO];[com.mycompany.ardutest.MainApp];[Application Start];
-[2015-01-26 18:12:19,423];[INFO];[com.mycompany.ardutest.MainApp];[GUI Start];
+[2015-02-05 07:31:17,811];[INFO];[com.mycompany.ardutest.MainApp];[Application Start];
+[2015-02-05 07:31:29,812];[INFO];[com.mycompany.ardutest.MainApp];[GUI Start];
+[2015-02-05 07:33:37,506];[INFO];[com.mycompany.ardutest.MainApp];[Application Start];
+[2015-02-05 07:33:45,443];[INFO];[com.mycompany.ardutest.MainApp];[GUI Start];

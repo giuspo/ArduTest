@@ -1,16 +1,24 @@
 package com.mycompany.ardutest;
 
 import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
+import com.typesafe.config.ConfigValueFactory;
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class FXMLController implements Initializable
 {
@@ -35,14 +43,44 @@ public class FXMLController implements Initializable
 	private TableColumn<LogDataModel, String> Msg2Col;
 	
 	@FXML
-    private void OnActionSetting(ActionEvent event)
+    private void OnActionSetting(ActionEvent event) throws IOException
 	{
+		FXMLLoader tLoader = new FXMLLoader(getClass().getResource("/fxml/ConfUI.fxml"));
+		Parent tParent = tLoader.load();
+		Scene tScene = new Scene(tParent);
 		
+		tScene.getStylesheets().add("/styles/Styles.css");
+		
+		Stage tStage = new Stage();
+		
+		tStage.initModality(Modality.WINDOW_MODAL);
+		tStage.initOwner(MainApp.getStage());
+		tStage.setTitle("Configuration");
+		tStage.setScene(tScene);
+		
+		Config tConf = MainApp.getAppConf().getConfig("Sock");
+		String strHost = tConf.getString("Host");
+		int iPort = tConf.getInt("Port");
+		ConfModel tConfModel = new ConfModel(strHost,
+			iPort);
+		ConfUIController tConfUiControl = tLoader.<ConfUIController>getController();
+		tConfUiControl.InitData(tStage,
+			tConfModel);
+		
+		tStage.showAndWait();
+		
+		if(tConfUiControl.isOk())
+		{
+			Config tNewConf = tConf.withValue("Host", ConfigValueFactory.fromAnyRef(tConfModel.getHost()))
+				.withValue("Port", ConfigValueFactory.fromAnyRef(tConfModel.getPort()));
+			
+			tNewConf.
+		}
     }
 	
 	@FXML
     private void OnActionConnect(ActionEvent event)
-	{	
+	{
 		try
 		{
 			// boolean bRet = MainApp.getAppConf().hasPath("Sock");

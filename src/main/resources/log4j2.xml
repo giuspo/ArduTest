@@ -19,7 +19,7 @@
 	</Appenders>
 	<Loggers>
 		<Logger name="com.mycompany.ardutest" level="info" additivity="false">
-			<appender-ref ref="file-log" level="info"/>
+			<appender-ref ref="file" level="info"/>
 		</Logger>
 		<Root level="info" additivity="false">
 			<appender-ref ref="console"/>
