@@ -7,18 +7,13 @@ package com.mycompany.ardutest;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
-import org.apache.logging.log4j.core.config.plugins.convert.TypeConverters;
 
 /**
  * FXML Controller class
@@ -71,8 +66,7 @@ public class ConfUIController implements Initializable
 		_tStage = tStage;
 		_tConfModel = tConfModel;
 		HostTxt.textProperty().bindBidirectional(_tConfModel.getHostProp());
-		Bindings.bindBidirectional(PortTxt.textProperty(),
-			tConfModel.getPortProp(),
+		PortTxt.textProperty().bindBidirectional(_tConfModel.getPortProp(),
 			new NumberStringConverter());
 	}
 }

@@ -2,6 +2,7 @@ package com.mycompany.ardutest;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
+import com.typesafe.config.ConfigRenderOptions;
 import com.typesafe.config.ConfigValueFactory;
 import java.io.IOException;
 import java.net.URL;
@@ -71,10 +72,14 @@ public class FXMLController implements Initializable
 		
 		if(tConfUiControl.isOk())
 		{
-			Config tNewConf = tConf.withValue("Host", ConfigValueFactory.fromAnyRef(tConfModel.getHost()))
-				.withValue("Port", ConfigValueFactory.fromAnyRef(tConfModel.getPort()));
+			Config tNewConf = ConfigFactory.empty()
+				.withValue("Host", ConfigValueFactory.fromAnyRef(
+				tConfModel.getHost()))
+				.withValue("Port", ConfigValueFactory.fromAnyRef(
+				tConfModel.getPort()))
+				.atPath("Sock");
 			
-			tNewConf.
+			MainApp.setAppConf(tNewConf);
 		}
     }
 	

@@ -2,6 +2,7 @@ package com.mycompany.ardutest;
 
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
+import akka.actor.Inbox;
 import akka.actor.Props;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
@@ -17,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import scala.concurrent.duration.FiniteDuration;
 
 public class MainApp extends Application
 {
@@ -27,6 +29,7 @@ public class MainApp extends Application
 	private static ActorRef _tTailerAct;
 	private static ActorRef _tUpdLogAct;
 	private static ActorRef _tSockRecvAct;
+	private static ActorRef _tConfAct;
 	private static final ObservableList<LogDataModel> _rgtLogData = FXCollections.observableArrayList();
 	private static Stage _tStage;
 
@@ -37,7 +40,24 @@ public class MainApp extends Application
 
 	public static Config getAppConf()
 	{
-		return _tAppConf;
+		Inbox tInbox = Inbox.create(_tActSys);
+		ConfMsg tConfLoadMsg = new ConfMsg(ConfMsg.EType.LOAD_EVT,
+			null);
+		
+		tInbox.send(_tConfAct, tConfLoadMsg);
+		
+		ConfMsg tConfLoadedMsg = (ConfMsg)tInbox.receive(FiniteDuration.Zero());
+		
+		return tConfLoadedMsg.getConf();
+	}
+	
+	public static void setAppConf(Config tConf)
+	{
+		Inbox tInbox = Inbox.create(_tActSys);
+		ConfMsg tConfLoadMsg = new ConfMsg(ConfMsg.EType.SAVE_EVT,
+			tConf);
+		
+		tInbox.send(_tConfAct, tConfLoadMsg);
 	}
 
 	public static ActorSystem getActSys()
@@ -104,10 +124,10 @@ public class MainApp extends Application
 	 */
 	public static void main(String[] args)
 	{	
-		File tAppFile = new File("App.cfg");
-		
-		_tAppConf = ConfigFactory.parseFile(tAppFile);
 		_tActSys = ActorSystem.create();
+		
+		_tConfAct = _tActSys.actorOf(Props.create(ConfAct.class),
+			"ConfAct");
 		
 		_tUpdLogAct = _tActSys.actorOf(Props.create(UpdLogAct.class, _rgtLogData),
 			"UpdLogAct");
