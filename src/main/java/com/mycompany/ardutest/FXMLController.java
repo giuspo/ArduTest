@@ -59,27 +59,16 @@ public class FXMLController implements Initializable
 		tStage.setTitle("Configuration");
 		tStage.setScene(tScene);
 		
-		Config tConf = MainApp.getAppConf().getConfig("Sock");
-		String strHost = tConf.getString("Host");
-		int iPort = tConf.getInt("Port");
-		ConfModel tConfModel = new ConfModel(strHost,
-			iPort);
+		ConfModel tConfModel = new ConfModel(MainApp.getAppConf());
 		ConfUIController tConfUiControl = tLoader.<ConfUIController>getController();
+		
 		tConfUiControl.InitData(tStage,
 			tConfModel);
-		
 		tStage.showAndWait();
 		
 		if(tConfUiControl.isOk())
-		{
-			Config tNewConf = ConfigFactory.empty()
-				.withValue("Host", ConfigValueFactory.fromAnyRef(
-				tConfModel.getHost()))
-				.withValue("Port", ConfigValueFactory.fromAnyRef(
-				tConfModel.getPort()))
-				.atPath("Sock");
-			
-			MainApp.setAppConf(tNewConf);
+		{	
+			MainApp.setAppConf(tConfModel.getConfig());
 		}
     }
 	

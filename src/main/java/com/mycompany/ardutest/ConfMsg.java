@@ -15,7 +15,7 @@ public class ConfMsg
 {
 	public enum EType
 	{
-		LOAD_EVT,
+		GET_EVT,
 		SAVE_EVT
 	}
 	

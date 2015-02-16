@@ -41,7 +41,7 @@ public class MainApp extends Application
 	public static Config getAppConf()
 	{
 		Inbox tInbox = Inbox.create(_tActSys);
-		ConfMsg tConfLoadMsg = new ConfMsg(ConfMsg.EType.LOAD_EVT,
+		ConfMsg tConfLoadMsg = new ConfMsg(ConfMsg.EType.GET_EVT,
 			null);
 		
 		tInbox.send(_tConfAct, tConfLoadMsg);

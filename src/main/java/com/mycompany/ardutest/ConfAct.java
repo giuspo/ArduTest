@@ -10,9 +10,12 @@ import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import com.typesafe.config.ConfigRenderOptions;
 import com.typesafe.config.ConfigValueFactory;
-import java.io.BufferedWriter;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import scala.sys.process.ProcessBuilderImpl;
 
 /**
  *
@@ -29,7 +32,20 @@ public class ConfAct extends UntypedActor
 		
 		File tAppFile = new File("App.cfg");
 		
-		_tConf = ConfigFactory.parseFile(tAppFile);
+		if(tAppFile.exists())
+		{
+			_tConf = ConfigFactory.parseFile(tAppFile);
+			
+			return;
+		}
+		
+		_tConf = ConfigFactory.parseResourcesAnySyntax(getClass(),
+			"/AppDefault.cfg");
+		FileInputStream tFileDefStream = new FileInputStream(
+			new File(getClass().getResource("/AppDefault.cfg").toURI()));
+		FileOutputStream tNewFile = new FileOutputStream("App.cfg");
+		
+		
 	}
 	
 	@Override
@@ -39,9 +55,9 @@ public class ConfAct extends UntypedActor
 		{
 			ConfMsg tConfMsg = (ConfMsg)objMsg;
 			
-			if(ConfMsg.EType.LOAD_EVT == tConfMsg.getType())
+			if(ConfMsg.EType.GET_EVT == tConfMsg.getType())
 			{
-				ConfMsg tNewConf = new ConfMsg(ConfMsg.EType.LOAD_EVT,
+				ConfMsg tNewConf = new ConfMsg(ConfMsg.EType.GET_EVT,
 					_tConf);
 				
 				getSender().tell(tNewConf, getSelf());
